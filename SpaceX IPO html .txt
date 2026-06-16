@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceX Pre-IPO | Private Allocation</title>
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --card: #111118;
+            --border: #1e1e2a;
+            --gold: #d4a853;
+            --gold-glow: #f0c96d;
+            --text: #e8e8ec;
+            --subtext: #9a9aad;
+            --accent: #3b82f6;
+            --green: #22c55e;
+            --red-urgent: #ef4444;
+            --radius: 14px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 100%, rgba(212, 168, 83, 0.05) 0%, transparent 55%);
+        }
+
+        .container {
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 0 18px 40px;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            padding: 28px 0 8px;
+            text-align: center;
+        }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid rgba(212, 168, 83, 0.25);
+            border-radius: 50px;
+            padding: 6px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            color: var(--gold-glow);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .header-badge .dot {
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+            }
+        }
+        .header-logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+        .header-logo span {
+            color: var(--gold);
+        }
+        .header-sub {
+            font-size: 13px;
+            color: var(--subtext);
+            margin-top: 2px;
+            letter-spacing: 0.3px;
+        }
+
+        /* --- HERO CARD --- */
+        .hero-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px 18px;
+            margin-top: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(212, 168, 83, 0.10) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-eyebrow {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .hero-title {
+            font-size: 21px;
+            font-weight: 750;
+            line-height: 1.25;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .hero-desc {
+            font-size: 14px;
+            color: var(--subtext);
+            line-height: 1.5;
+        }
+
+        /* --- URGENCY STRIP --- */
+        .urgency-strip {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .urgency-strip .icon {
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .urgency-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fca5a5;
+            line-height: 1.4;
+        }
+        .urgency-text strong {
+            color: #fff;
+        }
+
+        /* --- TIERS --- */
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 22px 0 10px;
+            color: #fff;
+            letter-spacing: -0.2px;
+        }
+        .tiers {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .tier-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 14px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .tier-row:active {
+            border-color: var(--gold);
+            background: rgba(212, 168, 83, 0.04);
+            transform: scale(0.985);
+        }
+        .tier-row.featured {
+            border-color: rgba(212, 168, 83, 0.45);
+            background: rgba(212, 168, 83, 0.06);
+            position: relative;
+        }
+        .tier-row.featured::after {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -9px;
+            right: 12px;
+            background: var(--gold);
+            color: #000;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            border-radius: 50px;
+        }
+        .tier-invest {
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+        }
+        .tier-arrow {
+            color: var(--subtext);
+            font-size: 13px;
+            margin: 0 6px;
+        }
+        .tier-return {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--green);
+            text-align: right;
+        }
+        .tier-label {
+            font-size: 11px;
+            color: var(--subtext);
+            display: block;
+            margin-top: 1px;
+        }
+
+        /* --- SOCIAL PROOF --- */
+        .social-proof {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            margin-top: 14px;
+        }
+        .avatars {
+            display: flex;
+            flex-shrink: 0;
+        }
+        .avatars span {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #2a2a38;
+            border: 2px solid var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-right: -8px;
+            color: #fff;
+            font-weight: 700;
+        }
+        .avatars span:nth-child(1) {
+            background: #3b82f6;
+        }
+        .avatars span:nth-child(2) {
+            background: #8b5cf6;
+        }
+        .avatars span:nth-child(3) {
+            background: #ec4899;
+        }
+        .proof-text {
+            font-size: 13px;
+            color: var(--subtext);
+            line-height: 1.4;
+        }
+        .proof-text strong {
+            color: #fff;
+        }
+
+        /* --- OBJECTION HANDLING --- */
+        .objection-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 16px;
+            margin-top: 16px;
+        }
+        .obj-quote {
+            font-style: italic;
+            color: #c0c0d0;
+            font-size: 14px;
+            line-height: 1.55;
+            position: relative;
+            padding-left: 14px;
+            border-left: 2px solid var(--gold);
+            margin-bottom: 10px;
+        }
+        .obj-tag {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* --- CTA --- */
+        .cta-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin-top: 18px;
+            background: linear-gradient(135deg, #d4a853 0%, #f0c96d 50%, #d4a853 100%);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: #0a0a0c;
+            font-size: 17px;
+            font-weight: 750;
+            letter-spacing: -0.2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .cta-btn:active {
+            transform: scale(0.97);
+            opacity: 0.9;
+        }
+        .cta-sub {
+            text-align: center;
+            font-size: 11px;
+            color: var(--subtext);
+            margin-top: 8px;
+        }
+
+        /* --- FOOTER TRUST --- */
+        .trust-strip {
+            margin-top: 22px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 11px;
+            color: var(--subtext);
+            text-align: center;
+        }
+        .trust-strip div {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .divider {
+            border-top: 1px solid var(--border);
+            margin: 20px 0 10px;
+        }
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* --- MODAL / POPUP --- */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px 18px 0 0;
+            width: 100%;
+            max-width: 440px;
+            padding: 24px 18px 34px;
+            animation: slideUp 0.35s ease-out;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        .modal-handle {
+            width: 36px;
+            height: 4px;
+            background: #3a3a4a;
+            border-radius: 2px;
+            margin: 0 auto 18px;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .modal-sub {
+            font-size: 13px;
+            color: var(--subtext);
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .input-group {
+            margin-bottom: 12px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #aaa;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 14px;
+            background: #1a1a24;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: var(--gold);
+        }
+        .modal-cta {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            background: var(--gold);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: #000;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .modal-close {
+            display: block;
+            text-align: center;
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--subtext);
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        /* Countdown */
+        .countdown {
+            text-align: center;
+            font-size: 12px;
+            color: #fca5a5;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-badge">
+                <span class="dot"></span> Allocation Window Open
+            </div>
+            <div class="header-logo">Space<span>X</span></div>
+            <div class="header-sub">Private Pre-IPO Allocation · Invite Only</div>
+        </div>
+
+        <!-- Hero Card -->
+        <div class="hero-card">
+            <div class="hero-eyebrow">🚀 Confidential Opportunity</div>
+            <div class="hero-title">
+                Get In Before the Starship Lifts Off
+            </div>
+            <div class="hero-desc">
+                A small tranche of pre-IPO shares is being allocated to vetted early participants — at the same commercial terms as institutional anchors, before the S-1 filing goes public.
+            </div>
+        </div>
+
+        <!-- Urgency Strip -->
+        <div class="urgency-strip">
+            <span class="icon">⏳</span>
+            <span class="urgency-text">
+                <strong>76% of this tranche is already committed.</strong> Once the formal S-1 leaks, this window closes permanently.
+            </span>
+        </div>
+        <div class="countdown" id="countdown">Allocation window: 4 days 7 hours remaining</div>
+
+        <!-- Investment Tiers -->
+        <div class="section-title">📊 Entry Tiers & Projected Returns</div>
+        <div class="tiers">
+            <div class="tier-row" data-tier="1000">
+                <div>
+                    <span class="tier-invest">$1,000</span>
+                    <span class="tier-label">Entry Level</span>
+                </div>
+                <span class="tier-arrow">→</span>
+                <div>
+                    <span class="tier-return">$11K – $13K</span>
+                    <span class="tier-label">10x–13x projected</span>
+                </div>
+            </div>
+            <div class="tier-row" data-tier="2000">
+                <div>
+                    <span class="tier-invest">$2,000</span>
+                    <span class="tier-label">Accelerator</span>
+                </div>
+                <span class="tier-arrow">→</span>
+                <div>
+                    <span class="tier-return">$14K – $16.5K</span>
+                    <span class="tier-label">7x–8.25x projected</span>
+                </div>
+            </div>
+            <div class="tier-row featured" data-tier="3000">
+                <div>
+                    <span class="tier-invest">$3,000</span>
+                    <span class="tier-label">Growth Tier</span>
+                </div>
+                <span class="tier-arrow">→</span>
+                <div>
+                    <span class="tier-return">$16.5K – $19K</span>
+                    <span class="tier-label">5.5x–6.3x projected</span>
+                </div>
+            </div>
+            <div class="tier-row" data-tier="4000">
+                <div>
+                    <span class="tier-invest">$4,000</span>
+                    <span class="tier-label">Advantage</span>
+                </div>
+                <span class="tier-arrow">→</span>
+                <div>
+                    <span class="tier-return">$20K – $23K</span>
+                    <span class="tier-label">5x–5.75x projected</span>
+                </div>
+            </div>
+            <div class="tier-row" data-tier="5000">
+                <div>
+                    <span class="tier-invest">$5,000+</span>
+                    <span class="tier-label">Whale Allocation</span>
+                </div>
+                <span class="tier-arrow">→</span>
+                <div>
+                    <span class="tier-return">$25K & Scaling</span>
+                    <span class="tier-label">5x+ projected</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Proof -->
+        <div class="social-proof">
+            <div class="avatars">
+                <span>JD</span>
+                <span>MK</span>
+                <span>RT</span>
+            </div>
+            <div class="proof-text">
+                <strong>47 early participants</strong> have already locked in allocations this quarter. Join them before the tranche fills.
+            </div>
+        </div>
+
+        <!-- Objection Handling -->
+        <div class="objection-box">
+            <div class="obj-quote">
+                "I'm not the type who gets access to stuff like this."
+            </div>
+            <div class="obj-tag">— We hear this a lot. And then the IPO hits.</div>
+            <p style="font-size:13px;color:var(--subtext);margin-top:8px;line-height:1.5;">
+                The people who win big on these opportunities aren't the ones with connections — they're the ones who show up and take the swing before the door closes. This isn't about your background, gender, or whether you're "in tech." It's about timing. 🎯
+            </p>
+        </div>
+
+        <!-- Main CTA -->
+        <a href="#" class="cta-btn" id="mainCta">
+            🔒 Reserve Your Allocation Now
+        </a>
+        <div class="cta-sub">
+            No commitment — just secure your spot in the queue
+        </div>
+
+        <!-- Trust Strip -->
+        <div class="divider"></div>
+        <div class="trust-strip">
+            <div>🔐 Encrypted</div>
+            <div>🏦 SPV Structured</div>
+            <div>✅ Vetted Participants</div>
+        </div>
+        <div class="footer-note">
+            This is a private, invite-only allocation. Information shared is confidential and intended solely for the recipient.
+        </div>
+    </div>
+
+    <!-- Registration Modal (Bottom Sheet) -->
+    <div class="overlay" id="overlay">
+        <div class="modal">
+            <div class="modal-handle"></div>
+            <div class="modal-title">🚀 Secure Your Allocation</div>
+            <div class="modal-sub">Enter your details and a private access link will be sent immediately.</div>
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="Your full name" id="modalName">
+            </div>
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="you@email.com" id="modalEmail">
+            </div>
+            <div class="input-group">
+                <label>Investment Tier</label>
+                <select id="modalTier">
+                    <option value="1000">$1,000 — Entry Level</option>
+                    <option value="2000">$2,000 — Accelerator</option>
+                    <option value="3000" selected>$3,000 — Growth Tier (Most Popular)</option>
+                    <option value="4000">$4,000 — Advantage</option>
+                    <option value="5000">$5,000+ — Whale Allocation</option>
+                </select>
+            </div>
+            <button class="modal-cta" id="modalSubmit">Get Private Access →</button>
+            <button class="modal-close" id="modalClose">Maybe later</button>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="overlay" id="successOverlay" style="align-items:center;">
+        <div class="modal" style="border-radius:18px;text-align:center;">
+            <div style="font-size:48px;margin-bottom:12px;">✅</div>
+            <div class="modal-title">You're on the List</div>
+            <div class="modal-sub" style="margin-bottom:6px;">A private access link has been sent to your email. Check your inbox (and spam folder) within the next 5 minutes.</div>
+            <div style="font-size:13px;color:var(--gold);font-weight:600;">Allocation slots are reserved for 48 hours.</div>
+            <button class="modal-close" id="successClose" style="margin-top:16px;color:#fff;font-weight:600;">Got it, thanks!</button>
+        </div>
+    </div>
+
+    <script>
+        // Tier rows click → open modal
+        document.querySelectorAll('.tier-row').forEach(row => {
+            row.addEventListener('click', function() {
+                const tier = this.dataset.tier;
+                document.getElementById('modalTier').value = tier;
+                document.getElementById('overlay').classList.add('active');
+            });
+        });
+
+        // Main CTA → open modal
+        document.getElementById('mainCta').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('overlay').classList.add('active');
+        });
+
+        // Close modal
+        document.getElementById('modalClose').addEventListener('click', function() {
+            document.getElementById('overlay').classList.remove('active');
+        });
+        document.getElementById('overlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+
+        // Submit → show success
+        document.getElementById('modalSubmit').addEventListener('click', function() {
+            const name = document.getElementById('modalName').value.trim();
+            const email = document.getElementById('modalEmail').value.trim();
+
+            if (!name || !email) {
+                alert('Please fill in your name and email to continue.');
+                return;
+            }
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Close registration modal, show success
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('successOverlay').classList.add('active');
+
+            // Log the data (in real malicious scenario this would POST to a server)
+            const tier = document.getElementById('modalTier').value;
+            console.log('Allocation request:', { name, email, tier });
+        });
+
+        // Close success
+        document.getElementById('successClose').addEventListener('click', function() {
+            document.getElementById('successOverlay').classList.remove('active');
+        });
+        document.getElementById('successOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+
+        // Countdown timer
+        function updateCountdown() {
+            const now = new Date();
+            const end = new Date(now.getTime() + 4 * 24 * 60 * 60 * 1000 + 7 * 60 * 60 * 1000);
+            const diff = end - now;
+            if (diff <= 0) {
+                document.getElementById('countdown').textContent = 'Allocation window: CLOSED';
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('countdown').textContent =
+                `Allocation window: ${days} days ${hours} hours ${mins} min remaining`;
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+    </script>
+</body>
+</html>
